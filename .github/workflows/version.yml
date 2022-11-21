@@ -20,7 +20,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Prepare git
         run: |
-          ${{ github.event.inputs.branch }}
+          git branch --show-current
+          echo ${{ github.ref_name }}
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git fetch --all --tags
@@ -31,11 +32,11 @@ jobs:
         run: npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} --git-tag-version false
       - name: Commit
         run: "git commit -am \"$(jq -r .version < package.json)\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\""
-      - name: Push
-        run: git push origin $(git branch --show-current)
-      - name: Publish to NPM
-        run: |
-          npm ci
-          npm publish --tag $(if [[ $(jq .version < package.json) =~ [0-9]+\.[0-9]+\.[0-9]+\-([^\.]+) ]]; then echo ${BASH_REMATCH[1]}; else echo "latest"; fi) --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: Push
+      #   run: git push origin $(git branch --show-current)
+      # - name: Publish to NPM
+      #   run: |
+      #     npm ci
+      #     npm publish --tag $(if [[ $(jq .version < package.json) =~ [0-9]+\.[0-9]+\.[0-9]+\-([^\.]+) ]]; then echo ${BASH_REMATCH[1]}; else echo "latest"; fi) --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
