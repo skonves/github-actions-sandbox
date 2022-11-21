@@ -23,11 +23,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch --all --tags
-      # - run: git config user.name "github-actions[bot]"
-      # - run: git config user.email "github-actions[bot]@users.noreply.github.com"
-      # - run: git fetch --all --tags
-      - run: "if [[ -z \"${{ github.event.inputs.preid }}\" ]]; then npm version ${{ github.event.inputs.newversion }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\"; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\"; fi"
+      - name: Run npm version
+        run: "npm version ${{ github.event.inputs.newversion }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\" --preid ${{ github.event.inputs.preid }}"
+      # - run: "if [[ -z \"${{ github.event.inputs.preid }}\" ]]; then npm version ${{ github.event.inputs.newversion }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\"; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\"; fi"
       - run: git push origin $(git branch --show-current) --tags
       - run: npm ci
       - run: npm t
-      - run: if [[ -z \"${{ github.event.inputs.preid }}\" ]]; then npm publish --access public; else npm publish --tag ${{ github.event.inputs.preid }} --access public; fi
+      - run: if [[ -z "${{ github.event.inputs.preid }}" ]]; then npm publish --access public; else npm publish --tag ${{ github.event.inputs.preid }} --access public; fi
