@@ -25,4 +25,4 @@ jobs:
       - run: git push origin $(git branch --show-current) --tags
       - run: npm ci
       - run: npm t
-      - run: if [[ -z \"${{ github.event.inputs.preid }}\" ]]; then npm publish --tag ${{ github.event.inputs.preid }} --access public; else npm publish --access public; fi
+      - run: if [[ -z \"${{ github.event.inputs.preid }}\" ]]; then npm publish --access public; else npm publish --tag ${{ github.event.inputs.preid }} --access public; fi
