@@ -20,21 +20,21 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Prepare git
         run: |
-          git branch --show-current
           echo ${{ github.ref_name }}
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git fetch --all --tags
           git checkout -b ci-bump-version
-          echo ${{ github.ref_name }}
       # - name: Bump version
       #   run: "npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\""
       - name: Bump version
         run: npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} --git-tag-version false
       - name: Commit
         run: "git commit -am \"$(jq -r .version < package.json)\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\""
-      # - name: Push
-      #   run: git push origin $(git branch --show-current)
+      - name: Push
+        run: git push origin $(git branch --show-current)
+      - name: Pull request
+        run: gh pr merge $(gh pr create --base ${{ github.ref_name }} --fill) -r
       # - name: Publish to NPM
       #   run: |
       #     npm ci
