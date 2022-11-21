@@ -27,4 +27,4 @@ jobs:
       - run: if [[ -z "${{ github.event.inputs.preid }}" ]]; then npm version ${{ github.event.inputs.newversion }}; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }}; fi
       - run: git push origin $(git branch --show-current) --tags
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
