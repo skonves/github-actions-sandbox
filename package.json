@@ -1,6 +1,6 @@
 {
   "name": "@skonves/github-actions-sandbox",
-  "version": "0.0.11",
+  "version": "0.1.0-rc.0",
   "description": "Base project for creating a console application in Typescript",
   "main": "./lib/index.js",
   "scripts": {
