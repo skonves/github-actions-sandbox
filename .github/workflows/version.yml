@@ -20,5 +20,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: git config user.name ${{ github.actor }}
       - run: git config user.email ${{ github.actor }}
+      - run: echo ${{ github.token }} | gh auth login --with-token
+      - run: gh api graphql -f "query='query { repository(owner:\"${{ github.repository_owner }}\", name:\"$(cut -d '/' -f2 <<< '${{ github.repository }}'\")) { viewerDefaultCommitEmail } viewer { name }}'"
       - run: if [[ -z "${{ github.event.inputs.preid }}" ]]; then npm version ${{ github.event.inputs.newversion }}; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }}; fi
       - run: git push origin $(git branch --show-current) --tags
