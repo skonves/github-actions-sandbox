@@ -20,5 +20,5 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: git config user.name "${GITHUB_ACTOR}"
       - run: git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - run: "if [[ -z \"${{ github.event.inputs.preid }}\" ]]; then npm version ${{ github.event.inputs.newversion }} -m \"%s\n\nCo-authored-by: github-actions <github-actions@users.noreply.github.com>\"; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: github-actions <github-actions@users.noreply.github.com>\"; fi"
+      - run: "if [[ -z \"${{ github.event.inputs.preid }}\" ]]; then npm version ${{ github.event.inputs.newversion }} -m \"%s\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\"; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\"; fi"
       - run: git push origin $(git branch --show-current) --tags
