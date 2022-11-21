@@ -19,6 +19,7 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
       - run: echo ${{ github.token }} | gh auth login --with-token
+      - run: gh auth setup-git
       - run: gh auth status
       - run: if [[ -z "${{ github.event.inputs.preid }}" ]]; then npm version ${{ github.event.inputs.newversion }}; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }}; fi
       - run: git push origin $(git branch --show-current) --tags
