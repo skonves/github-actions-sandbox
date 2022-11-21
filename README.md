@@ -2,7 +2,7 @@
 
 # github-actions-sandbox
 
-Sandbox for testing Github Actions stuff without breaking real projects
+Sandbox for testing Github Actions stuff without breaking real projects.
 
 ## How to:
 
