@@ -18,15 +18,16 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
-      - name: Configure git
+      - name: Prepare git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch --all --tags
-      - name: Run npm version
-        run: "npm version ${{ github.event.inputs.newversion }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\" --preid ${{ github.event.inputs.preid }}"
-      # - run: "if [[ -z \"${{ github.event.inputs.preid }}\" ]]; then npm version ${{ github.event.inputs.newversion }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\"; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\"; fi"
-      - run: git push origin $(git branch --show-current) --tags
-      - run: npm ci
-      - run: npm t
-      - run: if [[ -z "${{ github.event.inputs.preid }}" ]]; then npm publish --access public; else npm publish --tag ${{ github.event.inputs.preid }} --access public; fi
+      - name: Bump version
+        run: |
+          "npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>\""
+          git push origin $(git branch --show-current) --tags
+      - name: Publish to NPM
+        run: |
+          npm ci
+          npm publish --tag $(if [[ $(jq .version < package.json) =~ [0-9]+\.[0-9]+\.[0-9]+\-([^\.]+) ]]; then echo ${BASH_REMATCH[1]}; else echo "latest"; fi) --access public
