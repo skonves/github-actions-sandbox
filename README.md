@@ -2,7 +2,7 @@
 
 # github-actions-sandbox
 
-Base project for creating a console application in Typescript
+Sandbox for testing Github Actions stuff without breaking real projects
 
 ## How to:
 
