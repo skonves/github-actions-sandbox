@@ -34,7 +34,8 @@ jobs:
       - name: Push
         run: git push origin $(git branch --show-current)
       - name: Pull request
-        run: gh pr merge $(gh pr create --base ${{ github.ref_name }} --fill) -r
+        run: |
+          gh pr merge $(gh pr create --base ${{ github.ref_name }} --fill) --rebase --delete-branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Publish to NPM
