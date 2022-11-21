@@ -24,9 +24,9 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git fetch --all --tags
       - name: Bump version
-        run: |
-          "npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\""
-          git push origin $(git branch --show-current) --tags
+        run: "npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} -m \"%s\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\""
+      - name: Push
+        run: git push origin $(git branch --show-current) --tags
       - name: Publish to NPM
         run: |
           npm ci
