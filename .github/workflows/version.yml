@@ -18,11 +18,7 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
-      # - run: "curl -H 'Accept: application/vnd.github+json' "
-      - run: echo ${{ github.token }} | gh auth login --with-token
-      - run: "git config user.name \"$(jq .data.user.name <<< $(gh api graphql -F login='${{ github.actor }}' -f query='query($login: String!) { user(login: $login) { name }}'))\""
+      - run: git config user.name "${GITHUB_ACTOR}"
       - run: git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      # - run: "jq .data.user.name <<< gh api graphql -F login='${{ github.actor }}' -f query='query($login: String!) { user(login: $login) { name }}'"
-      # - run: echo ${{ toJson(github.event.sender) }}
       - run: if [[ -z "${{ github.event.inputs.preid }}" ]]; then npm version ${{ github.event.inputs.newversion }}; else npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }}; fi
       - run: git push origin $(git branch --show-current) --tags
