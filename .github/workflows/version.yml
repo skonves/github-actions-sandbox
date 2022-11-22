@@ -33,7 +33,7 @@ jobs:
         run: git push origin $(git branch --show-current)
       - name: Pull request
         run: |
-          gh pr merge $(gh pr create --base ${{ github.ref_name }} --fill) --rebase --delete-branch
+          gh pr merge $(gh pr create --base ${{ github.ref_name }} --fill) --admin --rebase --delete-branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Tag
