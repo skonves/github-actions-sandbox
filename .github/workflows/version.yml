@@ -41,8 +41,8 @@ jobs:
           git checkout ${{ github.ref_name }}
           git fetch origin ${{ github.ref_name }}
           git rebase origin/${{ github.ref_name }}
-          git tag $(jq -r .version < package.json)
-          git push origin $(jq -r .version < package.json)
+          git tag v$(jq -r .version < package.json)
+          git push origin v$(jq -r .version < package.json)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to NPM
