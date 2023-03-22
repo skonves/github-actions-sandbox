@@ -18,36 +18,9 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
-      - name: Prepare git
-        run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - name: Bump version
-        run: |
-          npm version ${{ github.event.inputs.newversion }} --preid ${{ github.event.inputs.preid }} --git-tag-version false
-          if [[ -z $(git ls-remote origin $(jq -r .version < package.json)) ]]; then echo "Created new version $(jq -r .version < package.json)"; else echo "Tag $(jq -r .version < package.json) already exists!" && exit 1 ; fi
-          git checkout -b bump-version-$(jq -r .version < package.json)
-      - name: Commit
-        run: "git commit -am \"$(jq -r .version < package.json)\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\""
-      - name: Push
-        run: git push origin $(git branch --show-current)
-      - name: Pull request
-        run: |
-          gh pr merge $(gh pr create --base ${{ github.ref_name }} --fill) --admin --rebase --delete-branch
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Tag
-        run: |
-          git checkout ${{ github.ref_name }}
-          git fetch origin ${{ github.ref_name }}
-          git rebase origin/${{ github.ref_name }}
-          git tag v$(jq -r .version < package.json)
-          git push origin v$(jq -r .version < package.json)
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish to NPM
-        run: |
-          npm ci
-          npm publish --tag $(if [[ $(jq .version < package.json) =~ [0-9]+\.[0-9]+\.[0-9]+\-([^\.]+) ]]; then echo ${BASH_REMATCH[1]}; else echo "latest"; fi) --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: skonves/npm-publish-version@main
+        with:
+          newversion: ${{ github.event.inputs.newversion }}
+          preid: ${{ github.event.inputs.preid }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          npm_token: ${{ secrets.NPM_TOKEN }}
