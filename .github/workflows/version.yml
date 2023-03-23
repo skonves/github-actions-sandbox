@@ -10,17 +10,10 @@ on:
         required: false
 
 jobs:
-  version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          registry-url: 'https://registry.npmjs.org'
-      - uses: skonves/npm-publish-version@main
-        with:
-          newversion: ${{ github.event.inputs.newversion }}
-          preid: ${{ github.event.inputs.preid }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          npm_token: ${{ secrets.NPM_TOKEN }}
+  call-workflow-passing-data:
+    uses: basketry/workflows/.github/workflows/publish.yml@main
+    with:
+      newversion: ${{ github.event.inputs.newversion }}
+      preid: ${{ github.event.inputs.preid }}
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      npm_token: ${{ secrets.NPM_TOKEN }}
