@@ -33,7 +33,7 @@ jobs:
         run: git push origin $(git branch --show-current)
         shell: bash
       - name: Pull request
-        run: gh pr create --base ${{ github.ref_name }} --fill
+        run: gh pr create --base ${{ github.ref_name }} --fill --reviewer "${GITHUB_ACTOR}"
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
