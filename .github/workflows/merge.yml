@@ -26,4 +26,18 @@ jobs:
     if: needs.compare.outputs.base_version != needs.compare.outputs.current_version
     runs-on: ubuntu-latest
     steps:
-      - run: echo publish
+      - uses: actions/checkout@v3
+      - name: Tag
+        run: |
+          git tag v$(jq -r .version < package.json)
+          git push origin v$(jq -r .version < package.json)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to NPM
+        run: |
+          npm ci
+          npm publish --tag $(if [[ $(jq .version < package.json) =~ [0-9]+\.[0-9]+\.[0-9]+\-([^\.]+) ]]; then echo ${BASH_REMATCH[1]}; else echo "latest"; fi) --access public
+        shell: bash
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
