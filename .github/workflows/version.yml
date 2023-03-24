@@ -34,7 +34,7 @@ jobs:
         shell: bash
       - name: Pull request
         run: |
-          gh pr create --base ${{ github.ref_name }} --title "Bump version to $(jq -r .version < package.json)" --body "Merge this PR to tag the release and publish to NPM." --assignee "${GITHUB_ACTOR}"
+          gh pr create --base ${{ github.ref_name }} --title "Bump version to $(jq -r .version < package.json)" --body-file ".github/workflows/pr-body.md" --assignee "${GITHUB_ACTOR}"
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
