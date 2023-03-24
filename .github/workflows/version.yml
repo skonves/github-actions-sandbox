@@ -17,29 +17,3 @@ jobs:
         with:
           newversion: ${{ inputs.newversion }}
           preid: ${{ inputs.preid }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-      # - uses: actions/checkout@v3
-      # - uses: actions/setup-node@v3
-      # - name: Prepare git
-      #   run: |
-      #     git config user.name "${GITHUB_ACTOR}"
-      #     git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      #   shell: bash
-      # - name: Bump version
-      #   run: |
-      #     npm version ${{ inputs.newversion }} --preid ${{ inputs.preid }} --git-tag-version false
-      #     if [[ -z $(git ls-remote origin $(jq -r .version < package.json)) ]]; then echo "Created new version $(jq -r .version < package.json)"; else echo "Tag $(jq -r .version < package.json) already exists!" && exit 1 ; fi
-      #     git checkout -b bump-version-$(jq -r .version < package.json)
-      #   shell: bash
-      # - name: Commit
-      #   run: "git commit -am \"$(jq -r .version < package.json)\n\nCo-authored-by: github-actions[bot] <github-actions[bot]@users.noreply.github.com>\""
-      #   shell: bash
-      # - name: Push
-      #   run: git push origin $(git branch --show-current)
-      #   shell: bash
-      # - name: Pull request
-      #   run: |
-      #     gh pr create --base ${{ github.ref_name }} --title "Bump version to $(jq -r .version < package.json)" --body-file ".github/workflows/pr-body.md" --assignee "${GITHUB_ACTOR}"
-      #   shell: bash
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
