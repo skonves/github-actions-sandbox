@@ -13,6 +13,8 @@ jobs:
   call-workflow-passing-data:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - name: Prepare git
         run: |
           git config user.name "${GITHUB_ACTOR}"
