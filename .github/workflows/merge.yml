@@ -24,5 +24,6 @@ jobs:
   publish:
     needs: compare
     if: needs.compare.outputs.base_version != needs.compare.outputs.current_version
+    runs-on: ubuntu-latest
     steps:
       - run: echo publish
