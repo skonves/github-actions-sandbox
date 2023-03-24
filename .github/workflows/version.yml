@@ -11,7 +11,7 @@ on:
 
 jobs:
   call-workflow-passing-data:
-    uses: basketry/workflows/.github/workflows/publish.yml@main
+    uses: basketry/workflows/.github/workflows/publish.yml@secrets
     with:
       newversion: ${{ github.event.inputs.newversion }}
       preid: ${{ github.event.inputs.preid }}
