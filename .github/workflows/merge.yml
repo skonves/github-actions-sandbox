@@ -8,9 +8,6 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    outputs:
-      base_version: ${{ steps.base.outputs.version }}
-      current_version: ${{ steps.current.outputs.version }}
     steps:
       - uses: actions/checkout@v3
         with:
