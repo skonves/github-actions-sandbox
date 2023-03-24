@@ -15,5 +15,3 @@ jobs:
     with:
       newversion: ${{ github.event.inputs.newversion }}
       preid: ${{ github.event.inputs.preid }}
-      github_token: ${{ secrets.GITHUB_TOKEN }}
-      npm_token: ${{ secrets.NPM_TOKEN }}
