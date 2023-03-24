@@ -36,4 +36,4 @@ jobs:
         run: gh pr create --base ${{ github.ref_name }} --fill
         shell: bash
         env:
-          GH_TOKEN: ${{ inputs.github_token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
