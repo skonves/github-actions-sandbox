@@ -8,5 +8,14 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo The PR was merged
+      - name: Checkout 
+        uses: actions/checkout@v3
+      - name: Current version
+        run: echo $(jq -r .version < package.json)
+      - name: Checkout base 
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+      - name: Previous version
+        run: echo $(jq -r .version < package.json)
+      
