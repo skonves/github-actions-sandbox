@@ -7,26 +7,14 @@ jobs:
   base:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.base_version }}
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.base.sha }}
-      - name: version
-        run: echo "base_version=$(jq -r .version < package.json)" >> "$GITHUB_OUTPUT"
-  current:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.current_version }}
-    steps:
+      - name: base_version
+        run: echo "test=$(jq -r .version < package.json)" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v3
-      - name: version
-        run: echo "current_version=$(jq -r .version < package.json)" >> "$GITHUB_OUTPUT"
-  compare:
-    needs: [base, current]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Compare
-        run: echo ${{needs.base.outputs.version}} ${{needs.current.outputs.version}}
+      - name: current_version
+        run: echo "test=$(jq -r .version < package.json)" >> "$GITHUB_OUTPUT"
+      - name: compare
+        run: echo ${{ steps.base_version.outputs.test }} ${{ steps.current_version.outputs.test }}
