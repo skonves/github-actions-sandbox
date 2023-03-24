@@ -28,9 +28,5 @@ jobs:
     needs: [base, current]
     runs-on: ubuntu-latest
     steps:
-      - env:
-          OUTPUT1: ${{needs.base.outputs.version}}
-          OUTPUT2: ${{needs.current.outputs.version}}
-        run: echo "$OUTPUT1 $OUTPUT2"
-
-
+      - name: Compare
+        run: echo ${{needs.base.outputs.version}} ${{needs.current.outputs.version}}
