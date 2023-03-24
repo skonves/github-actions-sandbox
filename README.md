@@ -4,6 +4,8 @@
 
 Sandbox for testing Github Actions stuff without breaking real projects
 
+trivial change
+
 ## How to:
 
 ### Run this project
