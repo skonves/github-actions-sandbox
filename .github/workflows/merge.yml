@@ -4,17 +4,33 @@ on:
       - closed
 
 jobs:
-  if_merged:
+  base:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.base_version }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Current version
-        run: echo $(jq -r .version < package.json)
-      - name: Checkout base
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.base.sha }}
-      - name: Previous version
-        run: echo $(jq -r .version < package.json)
+      - name: version
+        run: echo "base_version=$(jq -r .version < package.json)" >> "$GITHUB_OUTPUT"
+  current:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.current_version }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: version
+        run: echo "current_version=$(jq -r .version < package.json)" >> "$GITHUB_OUTPUT"
+  compare:
+    needs: [base, current]
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          OUTPUT1: ${{needs.base.outputs.version}}
+          OUTPUT2: ${{needs.current.outputs.version}}
+        run: echo "$OUTPUT1 $OUTPUT2"
+
+
