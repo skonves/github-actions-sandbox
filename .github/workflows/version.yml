@@ -11,6 +11,7 @@ on:
 
 jobs:
   call-workflow-passing-data:
+    runs-on: ubuntu-latest
     steps:
       - name: Prepare git
         run: |
