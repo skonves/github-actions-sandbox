@@ -33,7 +33,8 @@ jobs:
         run: git push origin $(git branch --show-current)
         shell: bash
       - name: Pull request
-        run: gh pr create --base ${{ github.ref_name }} --fill --reviewer "${GITHUB_ACTOR}"
+        run: |
+          gh pr create --base ${{ github.ref_name }} --title "Bump version to $(jq -r .version < package.json)" --body "Merge this PR to tag the release and publish to NPM." --assignee "${GITHUB_ACTOR}"
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
