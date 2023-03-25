@@ -10,7 +10,7 @@ on:
         required: false
 
 jobs:
-  call-workflow-passing-data:
+  npm-version:
     runs-on: ubuntu-latest
     steps:
       - uses: skonves/npm-version@action
