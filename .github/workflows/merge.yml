@@ -26,6 +26,6 @@ jobs:
     if: needs.compare.outputs.base_version != needs.compare.outputs.current_version
     runs-on: ubuntu-latest
     steps:
-      - uses: skonves/npm-publish@action
+      - uses: skonves/npm-publish@provenance
         with:
           token: ${{ secrets.NPM_TOKEN }}

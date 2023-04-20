@@ -13,7 +13,7 @@ jobs:
   npm-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: skonves/npm-version@action
+      - uses: skonves/npm-version@main
         with:
           newversion: ${{ inputs.newversion }}
           preid: ${{ inputs.preid }}
