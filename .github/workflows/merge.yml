@@ -26,10 +26,9 @@ jobs:
     if: needs.compare.outputs.base_version != needs.compare.outputs.current_version
     runs-on: ubuntu-latest
     permissions:
-      contents: write # need at least read
+      contents: read # need at least read
       id-token: write # need
       discussions: write # need
-      # actions: write
       pull-requests: write
     steps:
       - uses: skonves/npm-publish@provenance
