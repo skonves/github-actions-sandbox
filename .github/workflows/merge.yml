@@ -29,12 +29,8 @@ jobs:
       contents: write # need at least read
       id-token: write # need
       discussions: write # need
-      actions: write
-      # deployments: write
+      # actions: write
       pull-requests: write
-      # repository-projects: write
-      # security-events: write
-      # statuses: write
     steps:
       - uses: skonves/npm-publish@provenance
         with:
