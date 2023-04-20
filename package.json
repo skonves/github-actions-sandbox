@@ -25,6 +25,10 @@
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skonves/github-actions-sandbox"
+  },
   "devDependencies": {
     "@types/jest": "^27.5.2",
     "@types/node": "^18.11.9",
