@@ -15,7 +15,6 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install -g npm
       - run: npm ci
       - run: npm t
       - run: if [[ "$GITHUB_REF" =~ refs/tags/v[0-9]+\.[0-9]+\.[0-9]+\-([^\.]+) ]]; then npm publish --provenance --tag ${BASH_REMATCH[1]} --access public; else npm publish --provenance --access public; fi
