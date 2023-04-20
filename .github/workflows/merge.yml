@@ -31,10 +31,10 @@ jobs:
       discussions: write # need
       actions: write
       # deployments: write
-      # pull-requests: write
-      repository-projects: write
-      security-events: write
-      statuses: write
+      pull-requests: write
+      # repository-projects: write
+      # security-events: write
+      # statuses: write
     steps:
       - uses: skonves/npm-publish@provenance
         with:
