@@ -30,12 +30,8 @@ jobs:
       id-token: write # need
       discussions: write # need
       actions: write
-      deployments: write
-      # issues: write
-      # checks: write
-      # packages: write
-      # pages: write
-      pull-requests: write
+      # deployments: write
+      # pull-requests: write
       repository-projects: write
       security-events: write
       statuses: write
