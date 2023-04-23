@@ -1,0 +1,12 @@
+name: version
+on:
+  workflow_call:
+
+jobs:
+  npm-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: skonves/npm-version@main
+        with:
+          newversion: ${{ github.event.inputs.newversion }}
+          preid: ${{ github.event.inputs.preid }}

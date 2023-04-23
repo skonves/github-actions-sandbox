@@ -11,9 +11,4 @@ on:
 
 jobs:
   npm-version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: skonves/npm-version@main
-        with:
-          newversion: ${{ inputs.newversion }}
-          preid: ${{ inputs.preid }}
+    uses: ./.github/workflows/shared-version.yml
